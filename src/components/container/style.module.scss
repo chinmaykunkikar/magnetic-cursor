@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  z-index: 1;
+  background-color: #222;
+
+  .heading {
+    margin-top: 4rem;
+    cursor: default;
+    font-size: 36px;
+    color: #ddd;
+    text-align: center;
+  }
+
+  .helperText {
+    margin-top: 1rem;
+    cursor: default;
+    font-size: 16px;
+    color: #898989;
+    text-align: center;
+  }
+
+  @media (hover: hover) {
+    .noHover {
+      display: none;
+    }
+  }
+
+  @media (hover: none) {
+    .noHover {
+      margin-top: 1rem;
+      cursor: default;
+      font-size: 16px;
+      color: #4e7ce9;
+      text-align: center;
+    }
+  }
+
+  .burger {
+    position: relative;
+    display: flex;
+    gap: 0.6rem;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 2rem;
+    pointer-events: none;
+    &::before,
+    &::after {
+      display: block;
+      content: "";
+      width: 3rem;
+      height: 4px;
+      mix-blend-mode: difference;
+      background-color: #eee;
+    }
+    .bounds {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: all;
+      &:hover {
+        transform: scale(3);
+      }
+    }
+  }
+
+  .group {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+}
