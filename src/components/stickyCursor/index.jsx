@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
-export default function StickyCursor({ stickyElement }) {
+export default function StickyCursor() {
   const [isStuck, setIsStuck] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -25,11 +25,7 @@ export default function StickyCursor({ stickyElement }) {
     const releaseDistanceSq = releaseDistance * releaseDistance;
 
     function getTargets() {
-      if (!stickyElement) return [];
-      const refs = Array.isArray(stickyElement)
-        ? stickyElement
-        : [stickyElement];
-      return refs.map((r) => r && r.current).filter(Boolean);
+      return Array.from(document.querySelectorAll("[data-magnetic]"));
     }
 
     function handleMouseMove(event) {
@@ -41,6 +37,7 @@ export default function StickyCursor({ stickyElement }) {
         mouse.y.set(clientY - cursorSize / 2);
         setIsStuck(false);
         setActiveIndex(null);
+        document.body.classList.remove("hide-cursor");
         return;
       }
 
@@ -74,10 +71,22 @@ export default function StickyCursor({ stickyElement }) {
         mouse.x.set(center.x - cursorSize / 2 + distance.x * 0.1);
         mouse.y.set(center.y - cursorSize / 2 + distance.y * 0.1);
 
+        // Move the active magnetic element slightly toward the cursor
+        targets.forEach((el, i) => {
+          if (i === idx) {
+            el.style.setProperty("--magnet-x", `${distance.x * 0.12}px`);
+            el.style.setProperty("--magnet-y", `${distance.y * 0.12}px`);
+          } else {
+            el.style.setProperty("--magnet-x", "0px");
+            el.style.setProperty("--magnet-y", "0px");
+          }
+        });
+
         if (!isStuck || activeIndex !== idx) {
           setIsStuck(true);
           setActiveIndex(idx);
         }
+        document.body.classList.add("hide-cursor");
       } else {
         mouse.x.set(clientX - cursorSize / 2);
         mouse.y.set(clientY - cursorSize / 2);
@@ -85,14 +94,21 @@ export default function StickyCursor({ stickyElement }) {
           setIsStuck(false);
           setActiveIndex(null);
         }
+        // Reset transforms when released
+        targets.forEach((el) => {
+          el.style.setProperty("--magnet-x", "0px");
+          el.style.setProperty("--magnet-y", "0px");
+        });
+        document.body.classList.remove("hide-cursor");
       }
     }
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.body.classList.remove("hide-cursor");
     };
-  }, [cursorSize, isStuck, activeIndex, mouse.x, mouse.y, stickyElement]);
+  }, [cursorSize, isStuck, activeIndex, mouse.x, mouse.y]);
 
   return (
     <motion.div

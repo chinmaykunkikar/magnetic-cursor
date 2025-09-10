@@ -2,18 +2,18 @@ import { forwardRef } from "react";
 import styles from "./style.module.scss";
 import Magnetic from "@/components/magnetic";
 
-const Container = forwardRef(function index({ secondRef }, ref) {
+const Container = forwardRef(function index() {
   return (
     <div className={styles.container}>
       <div className={styles.group}>
         <Magnetic>
-          <div className={styles.burger}>
-            <div ref={ref} className={styles.bounds} />
+          <div className={styles.burger} data-magnetic>
+            <div className={styles.bounds} />
           </div>
         </Magnetic>
         <Magnetic>
-          <div className={styles.burger}>
-            <div ref={secondRef} className={styles.bounds} />
+          <div className={styles.burger} data-magnetic>
+            <div className={styles.bounds} />
           </div>
         </Magnetic>
       </div>

@@ -11,7 +11,7 @@
 
   .heading {
     margin-top: 4rem;
-    cursor: default;
+    // cursor: default;
     font-size: 36px;
     color: #ddd;
     text-align: center;
@@ -19,7 +19,7 @@
 
   .helperText {
     margin-top: 1rem;
-    cursor: default;
+    // cursor: default;
     font-size: 16px;
     color: #898989;
     text-align: center;
@@ -34,7 +34,7 @@
   @media (hover: none) {
     .noHover {
       margin-top: 1rem;
-      cursor: default;
+      // cursor: default;
       font-size: 16px;
       color: #4e7ce9;
       text-align: center;
@@ -46,7 +46,7 @@
     display: flex;
     gap: 0.6rem;
     flex-direction: column;
-    cursor: pointer;
+    // cursor: pointer;
     padding: 2rem;
     pointer-events: none;
     &::before,
